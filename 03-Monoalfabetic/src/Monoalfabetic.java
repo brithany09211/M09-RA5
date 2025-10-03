@@ -60,10 +60,10 @@ public class Monoalfabetic {
                 char c = cadena.charAt(i);
 
                 if(Character.isUpperCase(c)) {
-                    int indice = compararIndice(caractersMayus, c);
-                    if(indice != -1) {
-                        if (i == indice) {
-                            cadenaXifrada += permutacio[indice];
+                    int index = compararIndice(caractersMayus, c);
+                    if(index != -1) {
+                        if (i == index) {
+                            cadenaXifrada += permutacio[index];
                         } else {
                             return cadenaXifrada;
                         }
