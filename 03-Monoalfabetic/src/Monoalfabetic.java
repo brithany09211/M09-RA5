@@ -99,6 +99,6 @@ public class Monoalfabetic {
                 return i;
             }      
         }
-        return -1; // Si l’índex no és igual a la posició de l’abecedari, retorna -1.
+        return -1; // Si el índex no es igual a la posición de el abecedario, devuelve -1.
     }
 }
