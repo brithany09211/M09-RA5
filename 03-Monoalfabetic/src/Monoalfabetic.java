@@ -1,3 +1,8 @@
+/*
+ * Programa que té com objectiu converteix un text amb xifratge mono-alfabètic quan per xifrar s’utilitza una
+ * permutació de l'abecedari original i es fa una substitució de cada lletra de l’alfabet original per la
+ * corresponent en la mateixa posició en l’alfabet permutat.
+ */
 import java.util.*;
 public class Monoalfabetic {
     //Variables globals:
@@ -14,67 +19,86 @@ public class Monoalfabetic {
             String resultXifrat = xifraMonoAlfa(cadena);
             System.out.println(cadena + "    =>  " + resultXifrat);
         }
-        /* 
+
         //Desxifrats:
         System.out.println("\nDesxifrat: ");
         System.out.println("------");
         for(int i = 0; i < proves.length; i++) {
             String cadena = proves[i];
-            String resultXifrat = xifraRotX(cadena, i*2);
-            String resultDesxifrat = desxifraRotX(resultXifrat, i*2);
-            System.out.println("("+ (i*2) +")-" + resultXifrat + "    =>  " + resultDesxifrat);
+            String resultXifrat = xifraMonoAlfa(cadena);
+            String resultDesxifrat = desxifraMonoAlfa(resultXifrat);
+            System.out.println(resultXifrat + "    =>  " + resultDesxifrat);
         }
-        */
     }
-    //Función que convierte el char caractersMayus a list<> despues utiliza Collectios shuffle (lista) 
-    //convierte en char[] y la devuelve
+
+    //Función que convierte el char caractersMayus a una lista después utiliza Collectios shuffle(lista) para mezclar y devuelve un char[]
     public static char[] permutaAlfabet(char[] abecedari) {
         List<Character> llistaCaracters = new ArrayList<>();
 
         for(int i = 0; i < caractersMayus.length; i++) {
             char c = caractersMayus[i];
-            llistaCaracters.add(c); //añadimos los caracteres a la lista
+            llistaCaracters.add(c); //Añadimos los caracteres a la lista
         }
         Collections.shuffle(llistaCaracters); //Los mezclamos con shuffle
 
         char[] permutacioCaracters = new char[llistaCaracters.size()];
         for(int i = 0; i < llistaCaracters.size(); i++) {
-            permutacioCaracters[i] += llistaCaracters.get(i); //guarda los caracteres de la lista en un array[]
+            permutacioCaracters[i] += llistaCaracters.get(i); //Guarda los caracteres de la lista en un char[]
         }
         return permutacioCaracters;
     }
-    public static int compararIndice (char[] abecedari, char c) {
-        for(int i= 0; i < abecedari.length; i++) {
-            char n = abecedari[i];
-            if(c == n) {
-                return i;
-            } 
-        }
-        return -1;
-    }
-    public static String xifraMonoAlfa(String cadena) {
-    //las minusculas se xifran en minusculas y las mayusculas en mayusculas con una booleana
-        String cadenaXifrada = ""; 
-        for(int i= 0; i < permutacio.length; i++) {         
-            for(int j= 0; j < cadena.length(); j++) {
-                char c = cadena.charAt(i);
 
-                if(Character.isUpperCase(c)) {
-                    int index = compararIndice(caractersMayus, c);
-                    if(index != -1) {
-                        if (i == index) {
-                            cadenaXifrada += permutacio[index];
-                        } else {
-                            return cadenaXifrada;
-                        }
-                    }
+    public static String xifraMonoAlfa(String cadena) {
+        String cadenaXifrada = "";       
+        for(int j= 0; j < cadena.length(); j++) {
+            char c = cadena.charAt(j);
+            boolean esMinuscula = Character.isLowerCase(c); // Guarda si es minúscula
+            char cMayus = Character.toUpperCase(c);          
+
+            int index = compararIndice(caractersMayus, cMayus);
+
+            if (index != -1) {
+                char caracterPermutat = permutacio[index];
+                if (esMinuscula) {
+                    caracterPermutat = Character.toLowerCase(caracterPermutat); //Lo pone en minúscula si era minúscula
                 }
+                cadenaXifrada += caracterPermutat;
+            } else {
+                cadenaXifrada += c; // Deja igual si no está en el abecedario
             }
         }
         return cadenaXifrada;
     }
+    
+    public static String desxifraMonoAlfa(String cadenaXifrada) {
+        
+        String cadenaDesxifrada = ""; 
 
-    public static String desxifraMonoAlfa(String cadena) {
-        return null;
+        for(int j= 0; j < cadenaXifrada.length(); j++) {
+            char c = cadenaXifrada.charAt(j);
+            boolean esMinuscula = Character.isLowerCase(c); // Guarda si es minúscula
+            char cMayus = Character.toUpperCase(c);           
+
+            int index = compararIndice(permutacio, cMayus);
+
+            if (index != -1) {
+                char caracterXifrat = caractersMayus[index];
+                if (esMinuscula) {
+                    caracterXifrat = Character.toLowerCase(caracterXifrat); //Lo pone en minúscula si era minúscula
+                }
+                cadenaDesxifrada += caracterXifrat;
+            } else {
+               cadenaDesxifrada += c; // Deja igual si no está en el abecedario
+            }
+        }
+        return cadenaDesxifrada;
+    }
+    public static int compararIndice(char[] abecedari, char c) {
+        for(int i = 0; i < abecedari.length; i++) { 
+            if(abecedari[i] == c) {
+                return i;
+            }      
+        }
+        return -1; // Si l’índex no és igual a la posició de l’abecedari, retorna -1.
     }
 }
