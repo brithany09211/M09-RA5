@@ -1,4 +1,3 @@
-package src;
 /*
  * Programa que té com objectiu converteix un text amb xifratge poli-alfabètic quan per xifrar s’utilitza una
  * permutació de l'abecedari original i es fa una substitució de cada lletra de l’alfabet original amb Random per la
