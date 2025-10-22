@@ -38,6 +38,10 @@ public class Polialfabetic {
         }
     }
 
+    private static void initRandom(long clau) {
+        rnd = new Random(clau);
+    }
+
     public static void permutaAlfabet() {
         List<Character> llistaCaracters = new ArrayList<>();
         for(int i = 0; i < caractersMayus.length; i++) {
@@ -94,10 +98,6 @@ public class Polialfabetic {
             }
         }
         return cadenaDesxifrada;
-    }
-
-    private static void initRandom(long clau) {
-        rnd = new Random(clau);
     }
 
     public static int compararIndice (char c, char[] caracters) {
