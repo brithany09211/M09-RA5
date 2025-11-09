@@ -9,8 +9,40 @@ package iticbcn.xifratge;
  */
 public class XifradorRotX implements Xifrador {
     //Variables globals:
-    char[] abecedariMinus = "aáàbcçdeéèfghiíìïjklmñnoóòpqrstuúùüvwxyz".toCharArray();
-    char[] abecedariMayus = "AÁÀBCÇDEÉÈFGHIÌÍÏJKLMÑNOÓÒPQRSTUÚÙÜVWXYZ".toCharArray();
+    private char[] abecedariMinus = "aáàbcçdeéèfghiíìïjklmñnoóòpqrstuúùüvwxyz".toCharArray();
+    private char[] abecedariMayus = "AÁÀBCÇDEÉÈFGHIÌÍÏJKLMÑNOÓÒPQRSTUÚÙÜVWXYZ".toCharArray();
+
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        int posicioDesplacada;
+        try {
+            posicioDesplacada = Integer.parseInt(clau);
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
+
+        if (posicioDesplacada < 0 || posicioDesplacada > 40) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
+
+        return new TextXifrat(xifraRotX(msg, posicioDesplacada).getBytes());
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        int posicioDesplacada;
+        try {
+            posicioDesplacada = Integer.parseInt(clau);
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
+
+        if (posicioDesplacada < 0 || posicioDesplacada > 40) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
+
+        return desxifraRotX(new String(xifrat.getBytes()), posicioDesplacada);
+    }
 
     public void forcaBrutaRotX(String cadenaXifrada ) {
         System.out.println("\nMissatge xifrat: " + cadenaXifrada);

@@ -12,9 +12,27 @@ public class XifradorMonoalfabetic implements Xifrador {
     char[] permutacio;
 
     public XifradorMonoalfabetic() {
-        this.permutacio = permutaAlfabet(caractersMayus);
+        permutacio = permutaAlfabet(caractersMayus); // Inicialitza la permutació en el constructor
     }
     
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        if (clau != null) {
+            throw new ClauNoSuportada("Xifratge monoalfabètic no suporta clau != null");
+        }
+
+        return new TextXifrat(xifraMonoAlfa(msg).getBytes());
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        if (clau != null) {
+            throw new ClauNoSuportada("Xifratge monoalfabètic no suporta clau != null");
+        }
+
+        return desxifraMonoAlfa(new String(xifrat.getBytes()));
+    }
+
     //Función que convierte el char caractersMayus a una lista después utiliza Collectios shuffle(lista) para mezclar y devuelve un char[]
     public char[] permutaAlfabet(char[] abecedari) {
         List<Character> llistaCaracters = new ArrayList<>();

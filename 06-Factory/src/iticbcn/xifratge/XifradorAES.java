@@ -22,6 +22,29 @@ public class XifradorAES implements Xifrador {
     private byte[] iv = new byte[MIDA_IV];
     public static final String CLAU = "Bril4M3j0r#09211";
 
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        try {
+            byte[] xifrat = xifraAES(msg, clau);
+            return new TextXifrat(xifrat);
+        } catch (Exception e) {
+            System.err.println("Error xifrant amb AES: " + e.getMessage());
+            System.exit(1);//termina el programa
+            return null; 
+        }
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        try {
+            return desxifraAES(xifrat.getBytes(), clau);
+        } catch (Exception e) {
+            System.err.println("Error desxifrant amb AES: " + e.getMessage());
+            System.exit(1); //termina el programa
+            return null; 
+        }
+    }
+
     public byte[] xifraAES(String msg, String password) throws Exception {
         //Obtenir els bytes de el String
         byte[] msgBytes = msg.getBytes("UTF-8");

@@ -1,17 +1,18 @@
 package iticbcn.xifratge;
 
 public class TextXifrat {
-    @Override
-    public String toString() {
-        return null;
+    private byte[] dades; 
+
+    public TextXifrat(byte[] dades) {
+        this.dades = dades;
     }
 
     public byte[] getBytes() {
-        return null;
+        return dades;
     }
 
-    //constructor amb un array de bytes.
-    public TextXifrat(byte[] array) {
-        
+    @Override
+    public String toString() {
+        return new String (dades);
     }
 }

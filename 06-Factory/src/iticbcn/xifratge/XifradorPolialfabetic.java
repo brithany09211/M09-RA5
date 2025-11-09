@@ -16,8 +16,37 @@ public class XifradorPolialfabetic implements Xifrador {
     char[] caractersMayus = "AÁÀBCÇDEÉÈFGHIÌÍÏJKLMÑNOÓÒPQRSTUÚÙÜVWXYZ".toCharArray();
     char[] caractersPermutats;
 
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        long clauConvertida;
+        try {
+            clauConvertida = Long.parseLong(clau);
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("La clau per xifrat Polialfabètic ha de ser un String convertible a long");
+        }
+
+        initRandom(clauConvertida);
+
+        return new TextXifrat(XifraPoliAlfa(msg).getBytes());
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+    
+        long clauConvertida;
+        try {
+            clauConvertida = Long.parseLong(clau);
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("La clau de Polialfabètic ha de ser un String convertible a long");
+        }
+
+        initRandom(clauConvertida);
+
+        return desxifraPoliAlfa(new String(xifrat.getBytes()));
+    }
+
     private void initRandom(long clau) {
-        rnd = new Random(clau);
+        rnd = new Random(clauSecreta);
     }
 
     public void permutaAlfabet() {
